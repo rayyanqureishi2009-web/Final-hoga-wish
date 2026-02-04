@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Trust Test ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: #0f0c29; background: linear-gradient(to bottom, #1e1b4b, #312e81, #1e1b4b); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        .box { background: rgba(255, 255, 255, 0.1); padding: 40px 20px; border-radius: 25px; backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); text-align: center; width: 85%; max-width: 400px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #fb7185; margin-bottom: 10px; }
+        .progress-container { width: 100%; background: rgba(255,255,255,0.1); border-radius: 20px; margin: 25px 0; display: none; overflow: hidden; height: 20px; border: 1px solid rgba(255,255,255,0.2); }
+        .progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #fb7185, #e11d48); border-radius: 20px; transition: 0.4s; }
+        .btn { padding: 12px 28px; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        #mainBtn { background: #e11d48; color: white; box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4); }
+        #yesBtn { background: #10b981; color: white; display: none; }
+        #noBtn { background: #4b5563; color: white; display: none; position: relative; }
+        #status { margin-top: 15px; font-size: 0.9rem; color: #cbd5e1; min-height: 24px; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h1 id="title">Bond Test 💎</h1>
+        <p id="desc">Ap, let's calculate our friendship strength!</p>
+        
+        <div class="progress-container" id="p-container">
+            <div class="progress-bar" id="p-bar"></div>
+        </div>
+
+        <p id="status"></p>
+
+        <button id="mainBtn" class="btn" onclick="startTest()">Check Now ✨</button>
+        
+        <div id="btn-group" style="display: none; gap: 15px; justify-content: center; margin-top: 20px;">
+            <button id="yesBtn" class="btn" onclick="success()">Accept Gift 🎁</button>
+            <button id="noBtn" class="btn" onmouseover="moveNo()" onclick="moveNo()">Reject ❌</button>
+        </div>
+    </div>
+
+    <script>
+        function startTest() {
+            document.getElementById('mainBtn').style.display = 'none';
+            document.getElementById('p-container').style.display = 'block';
+            let bar = document.getElementById('p-bar');
+            let status = document.getElementById('status');
+            let width = 0;
+
+            let interval = setInterval(() => {
+                if (width >= 99) {
+                    clearInterval(interval);
+                    status.innerHTML = "<span style='color:#fb7185; font-weight:bold;'>Error: Bond 100% karne ke liye gift accept karna parega!</span>";
+                    document.getElementById('btn-group').style.display = 'flex';
+                    document.getElementById('yesBtn').style.display = 'inline-block';
+                    document.getElementById('noBtn').style.display = 'inline-block';
+                } else {
+                    width++;
+                    bar.style.width = width + '%';
+                    if(width < 30) status.innerText = "Scanning memories...";
+                    else if(width < 60) status.innerText = "Calculating trust levels...";
+                    else if(width < 90) status.innerText = "Checking compatibility...";
+                    else status.innerText = "Finalizing result...";
+                }
+            }, 60);
+        }
+
+        function moveNo() {
+            let noBtn = document.getElementById('noBtn');
+            noBtn.style.position = 'absolute';
+            // Button ko screen ke andar hi rakhne ke liye calculation
+            let x = Math.random() * (window.innerWidth - 150);
+            let y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            
+            const msgs = ["Nice try!", "Maan jao na!", "No way!", "Daba ke dikhao!", "Error 404!"];
+            noBtn.innerText = msgs[Math.floor(Math.random() * msgs.length)];
+        }
+
+        function success() {
+            document.querySelector('.box').innerHTML = "<h1>100% Match! ✅</h1><p style='font-size:1.1rem;'>Thanks Ap! <br> Mujhe pata tha aap maan jaogi. <br> You're the best! ❤️</p>";
+        }
+    </script>
+</body>
+</html>
